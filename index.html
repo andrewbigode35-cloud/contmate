@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Verificação de Segurança</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+    background: #f7f7f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #161823;
+}
+
+.box {
+    width: 390px;
+    max-width: calc(100% - 30px);
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 18px;
+    padding: 36px 30px;
+    box-shadow: 0 12px 40px rgba(0,0,0,.08);
+}
+
+.logo {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 22px;
+    position: relative;
+}
+
+.logo::before,
+.logo::after {
+    content: "";
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    border-radius: 15px;
+}
+
+.logo::before {
+    background: #25f4ee;
+    left: 3px;
+    top: 9px;
+}
+
+.logo::after {
+    background: #fe2c55;
+    right: 3px;
+    top: 9px;
+}
+
+.logo span {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    border-radius: 15px;
+    background: #161823;
+    left: 10px;
+    top: 5px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 9px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #777;
+    font-size: 14px;
+    line-height: 21px;
+    margin-bottom: 28px;
+}
+
+.verification {
+    border: 1px solid #e5e5e5;
+    border-radius: 13px;
+    padding: 20px;
+    margin-bottom: 18px;
+}
+
+.small-title {
+    font-size: 12px;
+    color: #8a8a8a;
+    font-weight: bold;
+    letter-spacing: .5px;
+    margin-bottom: 12px;
+}
+
+.math {
+    background: #f5f5f5;
+    border-radius: 10px;
+    padding: 17px;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+input {
+    width: 100%;
+    height: 48px;
+    border: 1px solid #d7d7d7;
+    border-radius: 9px;
+    outline: none;
+    padding: 0 14px;
+    font-size: 16px;
+}
+
+input:focus {
+    border-color: #161823;
+    box-shadow: 0 0 0 2px rgba(0,0,0,.06);
+}
+
+button {
+    position: relative;
+    width: 100%;
+    height: 49px;
+    border: 0;
+    border-radius: 9px;
+    background: #fe2c55;
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+button::before {
+    content: "";
+    position: absolute;
+    width: 7px;
+    height: 100%;
+    background: #25f4ee;
+    left: 0;
+    top: 0;
+}
+
+button:hover {
+    background: #eb2049;
+}
+
+#mensagem {
+    min-height: 20px;
+    text-align: center;
+    font-size: 13px;
+    margin-top: 15px;
+}
+
+.security {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    margin-top: 18px;
+    font-size: 12px;
+    color: #999;
+}
+
+.security-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #25f4ee;
+}
+
+/* TELA DE SUCESSO */
+
+.success {
+    display: none;
+    text-align: center;
+}
+
+.check {
+    width: 75px;
+    height: 75px;
+    margin: 5px auto 25px;
+    border-radius: 50%;
+    background: #161823;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    box-shadow:
+        -5px 3px 0 #25f4ee,
+        5px -3px 0 #fe2c55;
+}
+
+.success h2 {
+    font-size: 23px;
+    margin-bottom: 10px;
+}
+
+.success p {
+    color: #777;
+    font-size: 14px;
+    line-height: 22px;
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    margin-top: 25px;
+}
+
+.loader span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #161823;
+    animation: loading 1s infinite alternate;
+}
+
+.loader span:nth-child(2) {
+    animation-delay: .2s;
+    background: #25f4ee;
+}
+
+.loader span:nth-child(3) {
+    animation-delay: .4s;
+    background: #fe2c55;
+}
+
+@keyframes loading {
+    from {
+        transform: translateY(0);
+        opacity: .4;
+    }
+
+    to {
+        transform: translateY(-7px);
+        opacity: 1;
+    }
+}
+
+@media(max-width:450px) {
+    .box {
+        padding: 30px 22px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <!-- VERIFICAÇÃO -->
+
+    <div id="paginaVerificacao">
+
+        <div class="logo">
+            <span>✓</span>
+        </div>
+
+        <h1>Verificação de segurança</h1>
+
+        <p class="subtitle">
+            Precisamos confirmar que esta solicitação
+            está sendo realizada por uma pessoa.
+        </p>
+
+        <div class="verification">
+
+            <div class="small-title">
+                CONFIRMAÇÃO HUMANA
+            </div>
+
+            <div class="math" id="conta"></div>
+
+            <input
+                id="resposta"
+                type="number"
+                placeholder="Digite o resultado"
+                autocomplete="off"
+            >
+
+        </div>
+
+        <button onclick="verificar()">
+            Confirmar e continuar
+        </button>
+
+        <div id="mensagem" aria-live="polite"></div>
+
+        <div class="security">
+            <div class="security-dot"></div>
+            Verificação de segurança
+        </div>
+
+    </div>
+
+    <!-- TELA DE SUCESSO -->
+
+    <div class="success" id="paginaSucesso">
+
+        <div class="check">
+            ✓
+        </div>
+
+        <h2>Verificação concluída</h2>
+
+        <p>
+            Sua verificação foi concluída com sucesso.
+            <br>
+            Você será direcionado automaticamente.
+        </p>
+
+        <div class="loader">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* =====================================
+   CONFIGURAÇÕES
+===================================== */
+
+const URL_DESTINO = "https://camvix.netlify.app/";
+
+const TEMPO_REDIRECIONAMENTO = 3000;
+
+/* =====================================
+   CONTAS PERMITIDAS
+===================================== */
+
+const contas = [
+    { pergunta: "1 + 4", resposta: 5 },
+    { pergunta: "5 + 3", resposta: 8 },
+    { pergunta: "6 - 2", resposta: 4 },
+    { pergunta: "3 + 2", resposta: 5 },
+    { pergunta: "1 + 4", resposta: 5 },
+    { pergunta: "6 + 1", resposta: 7 }
+];
+
+let respostaCorreta;
+
+/* =====================================
+   SORTEAR UMA DAS CONTAS
+===================================== */
+
+function gerarConta() {
+
+    const sorteio = Math.floor(
+        Math.random() * contas.length
+    );
+
+    const conta = contas[sorteio];
+
+    respostaCorreta = conta.resposta;
+
+    document.getElementById("conta").textContent =
+        `${conta.pergunta} = ?`;
+}
+
+/* =====================================
+   VERIFICAR RESPOSTA
+===================================== */
+
+function verificar() {
+
+    const input = document.getElementById("resposta");
+    const mensagem = document.getElementById("mensagem");
+
+    if (input.value.trim() === "") {
+
+        mensagem.textContent =
+            "Digite o resultado da operação.";
+
+        mensagem.style.color = "#fe2c55";
+
+        input.focus();
+        return;
+    }
+
+    const respostaUsuario = Number(input.value);
+
+    if (respostaUsuario === respostaCorreta) {
+
+        document.getElementById("paginaVerificacao")
+            .style.display = "none";
+
+        document.getElementById("paginaSucesso")
+            .style.display = "block";
+
+        /* REDIRECIONAMENTO APÓS 3 SEGUNDOS */
+
+        setTimeout(() => {
+
+            window.location.href = URL_DESTINO;
+
+        }, TEMPO_REDIRECIONAMENTO);
+
+    } else {
+
+        mensagem.textContent =
+            "Resultado incorreto. Tente novamente.";
+
+        mensagem.style.color = "#fe2c55";
+
+        input.value = "";
+
+        gerarConta();
+
+        input.focus();
+    }
+}
+
+/* =====================================
+   CONFIRMAR COM ENTER
+===================================== */
+
+document.getElementById("resposta")
+    .addEventListener("keydown", function(event) {
+
+        if (event.key === "Enter") {
+            verificar();
+        }
+
+    });
+
+/* INICIAR VERIFICAÇÃO */
+
+gerarConta();
+
+</script>
+
+</body>
+</html>
